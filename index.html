@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYNC HUB | Tecnologia & Field Service B2B</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#e6f4ff',
+              400: '#0099ff',
+              500: '#0088ee',
+              600: '#0077cc',
+            },
+            dark: {
+              900: '#090b10',
+              800: '#11141f',
+              700: '#1a1f2e',
+              600: '#252c40'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glow-brand {
+      box-shadow: 0 0 20px rgba(0, 153, 255, 0.25);
+    }
+    .glow-brand-lg {
+      box-shadow: 0 0 35px rgba(0, 153, 255, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-gray-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-400 selection:text-white">
+
+  <!-- BARRA DE STATUS SUPERIOR -->
+  <div class="bg-dark-800 border-b border-dark-700 py-2 px-4 text-center text-xs font-mono text-gray-400">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+        <span class="text-white font-semibold">SUPORTE TÉCNICO B2B</span>
+        <span class="hidden sm:inline text-gray-500">| Atendimento em Campo, Cabling & Infraestrutura</span>
+      </div>
+      <div class="text-brand-400 font-semibold">Cuiabá - Mato Grosso</div>
+    </div>
+  </div>
+
+  <!-- CABEÇALHO / NAVBAR -->
+  <header class="sticky top-0 z-40 bg-dark-900/90 backdrop-blur-md border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+      
+      <!-- LOGÓTIPO VETORIAL (SVG INSPIRADO NA LOGO) -->
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-dark-800 border border-brand-400/30 flex items-center justify-center p-2 glow-brand">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <!-- Cabo e Conector RJ45 -->
+            <path d="M 20 25 L 35 25 L 35 35 L 20 35 Z" fill="#0099ff" />
+            <path d="M 23 20 L 26 20 L 26 25 L 23 25 Z" fill="#ffffff" />
+            <path d="M 29 20 L 32 20 L 32 25 L 29 25 Z" fill="#ffffff" />
+            <path d="M 35 30 C 45 30 45 65 30 65 C 20 65 20 50 35 45 L 50 45" stroke="#0099ff" stroke-width="4" stroke-linecap="round" fill="none" />
+            <!-- Marcador de Localização / Nós de Rede -->
+            <path d="M 50 20 C 40 20 35 30 35 40 C 35 55 50 75 50 75 C 50 75 65 55 65 40 C 65 30 60 20 50 20 Z" stroke="#0099ff" stroke-width="4" fill="none" />
+            <circle cx="50" cy="38" r="5" fill="#0099ff" />
+            <!-- Ligações de Conectividade -->
+            <line x1="35" y1="65" x2="50" y2="75" stroke="#0099ff" stroke-width="3" />
+            <line x1="50" y1="75" x2="65" y2="65" stroke="#0099ff" stroke-width="3" />
+            <circle cx="35" cy="65" r="4" fill="#ffffff" />
+            <circle cx="65" cy="65" r="4" fill="#ffffff" />
+            <circle cx="50" cy="75" r="4" fill="#0099ff" />
+          </svg>
+        </div>
+        <div>
+          <span class="text-2xl font-extrabold tracking-tight text-white">SYNC <span class="text-brand-400">HUB</span></span>
+          <p class="text-[10px] text-gray-400 font-mono uppercase tracking-wider">Field Service • Cabling • TI</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button id="open-scope" class="relative bg-brand-400 hover:bg-brand-500 text-white font-bold text-xs uppercase px-5 py-3 rounded-lg transition-all glow-brand flex items-center gap-2">
+          <span>MEU ESCOPO</span>
+          <span id="scope-count" class="bg-black text-brand-400 text-xs px-2 py-0.5 rounded-full font-mono font-bold">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative py-20 px-4 overflow-hidden border-b border-dark-700 bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900">
+    <div class="max-w-5xl mx-auto text-center space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 bg-brand-400/10 border border-brand-400/30 px-4 py-1.5 rounded-full text-xs font-mono text-brand-400">
+        <span class="w-2 h-2 rounded-full bg-brand-400"></span> TECNOLOGIA DA INFORMAÇÃO • FIELD SERVICE • CABLING
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+        Sua operação de TI sem falhas com <span class="text-brand-400">Field Service de Alta Performance</span>
+      </h1>
+
+      <p class="text-gray-400 max-w-3xl mx-auto text-base sm:text-lg">
+        Atendimento presencial especializado, organização de racks, fusão óptica, cabeamento estruturado e infraestrutura de redes em Cuiabá e região.
+      </p>
+
+      <!-- METRICS GRID -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8">
+        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
+          <div class="text-xs text-gray-400 font-mono">ATENDIMENTO</div>
+          <div class="text-xl font-bold text-white mt-1">Presencial & Remoto</div>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
+          <div class="text-xs text-gray-400 font-mono">REGULARIÇÃO</div>
+          <div class="text-xl font-bold text-brand-400 mt-1">Cuiabá - MT</div>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
+          <div class="text-xs text-gray-400 font-mono">DOCUMENTAÇÃO</div>
+          <div class="text-xl font-bold text-white mt-1">Checklist & Relatórios</div>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
+          <div class="text-xs text-gray-400 font-mono">CONTRATAÇÃO</div>
+          <div class="text-xl font-bold text-brand-400 mt-1">Sob Demanda / Avulso</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO DE SERVIÇOS -->
+  <main class="max-w-7xl mx-auto px-4 py-16 flex-1 w-full">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">Catálogo de Serviços & Soluções</h2>
+        <p class="text-gray-400 text-sm mt-1">Selecione os serviços necessários para montar o escopo técnico do seu atendimento.</p>
+      </div>
+
+      <!-- BOTÕES DE FILTRO -->
+      <div class="flex flex-wrap gap-2">
+        <button onclick="filterServices('all')" class="filter-btn active bg-brand-400 text-white font-semibold text-xs px-4 py-2 rounded-lg transition-all">Todos</button>
+        <button onclick="filterServices('field')" class="filter-btn bg-dark-800 hover:bg-dark-700 text-gray-300 font-semibold text-xs px-4 py-2 rounded-lg border border-dark-700 transition-all">Field Service</button>
+        <button onclick="filterServices('infra')" class="filter-btn bg-dark-800 hover:bg-dark-700 text-gray-300 font-semibold text-xs px-4 py-2 rounded-lg border border-dark-700 transition-all">Cabeamento & Racks</button>
+        <button onclick="filterServices('auto')" class="filter-btn bg-dark-800 hover:bg-dark-700 text-gray-300 font-semibold text-xs px-4 py-2 rounded-lg border border-dark-700 transition-all">MikroTik & Automação</button>
+      </div>
+    </div>
+
+    <!-- GRID DE SERVIÇOS -->
+    <div id="services-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Inserido dinamicamente via JS -->
+    </div>
+  </main>
+
+  <!-- DRAWER DO ESCOPO -->
+  <div id="scope-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden justify-end">
+    <div class="bg-dark-800 w-full max-w-lg h-full border-l border-dark-700 p-6 flex flex-col justify-between overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between border-b border-dark-700 pb-4 mb-6">
+          <div>
+            <h3 class="text-xl font-bold text-white">Solicitação de Escopo</h3>
+            <p class="text-xs text-gray-400">Revise os serviços selecionados antes do envio</p>
+          </div>
+          <button id="close-scope" class="text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
+        </div>
+
+        <div id="selected-items" class="space-y-3">
+          <!-- Itens do escopo -->
+        </div>
+      </div>
+
+      <div class="border-t border-dark-700 pt-6 mt-6 space-y-4">
+        <div>
+          <label class="block text-xs font-mono text-gray-400 mb-1">NOME DA EMPRESA / SOLICITANTE *</label>
+          <input type="text" id="input-company" placeholder="Ex: Tech Soluções / Carlos" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-gray-400 mb-1">CIDADE DA DEMANDA *</label>
+          <input type="text" id="input-location" placeholder="Ex: Cuiabá - MT" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
+        </div>
+
+        <button onclick="sendToWhatsApp()" class="w-full bg-brand-400 hover:bg-brand-500 text-white font-bold text-sm py-4 rounded-lg uppercase tracking-wider transition-all glow-brand flex items-center justify-center gap-2">
+          ENVIAR ESCOPO VIA WHATSAPP
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark-800 border-t border-dark-700 py-10 px-4 text-sm text-gray-400">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div>
+        <div class="text-xl font-bold text-white mb-1">SYNC <span class="text-brand-400">HUB</span></div>
+        <p class="text-xs text-gray-500">Tecnologia da Informação • Field Service • Cabling</p>
+        <p class="text-xs text-gray-400 mt-1">Cuiabá - Mato Grosso</p>
+      </div>
+      <div class="text-xs text-center md:text-right">
+        <div>WhatsApp: <a href="https://wa.me/5565992762871" target="_blank" class="text-brand-400 font-bold hover:underline">(65) 99276-2871</a></div>
+        <div>Contato: <a href="mailto:contato@synchub.net.br" class="text-brand-400 hover:underline">contato@synchub.net.br</a></div>
+        <div class="mt-2 text-gray-600">© 2026 Sync Hub. Todos os direitos reservados.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // NÚMERO RETIRADO DIRETAMENTE DA LOGO DA SYNC PRO
+    const WHATSAPP_NUMBER = "5565992762871";
+
+    const servicesList = [
+      {
+        id: "field-01",
+        cat: "field",
+        title: "Atendimento de Campo (Field Service)",
+        desc: "Suporte presencial para chamados corretivos, preventivos ou troca de ativos de TI com técnicos qualificados.",
+        tag: "Presencial"
+      },
+      {
+        id: "field-02",
+        cat: "field",
+        title: "Homologação & Survey de Site",
+        desc: "Vistoria técnica detalhada em instalações físicas, verificação de infraestrutura e relatórios técnicos.",
+        tag: "Relatório B2B"
+      },
+      {
+        id: "infra-01",
+        cat: "infra",
+        title: "Organização & Cabeamento de Racks",
+        desc: "Organização de patch panels, cabeamento padronizado, identificação de cabos e limpeza estrutural de racks.",
+        tag: "Infraestrutura"
+      },
+      {
+        id: "infra-02",
+        cat: "infra",
+        title: "Lançamento & Fusão de Fibra Óptica",
+        desc: "Lançamento de cabos ópticos, fusões de precisão, conectorização e testes de conectividade em campo.",
+        tag: "Redes Ópticas"
+      },
+      {
+        id: "auto-01",
+        cat: "auto",
+        title: "Configuração & Automação MikroTik",
+        desc: "Criação de scripts RouterOS, balanceamento de carga (Failover/PBR), VPNs corporativas e segurança de borda.",
+        tag: "RouterOS"
+      },
+      {
+        id: "auto-02",
+        cat: "auto",
+        title: "Deploy de Servidores & GLPI em Docker",
+        desc: "Instalação de sistemas de chamados, monitoramento (Zabbix/Grafana) e servidores Ubuntu totalmente configurados.",
+        tag: "DevOps & Cloud"
+      }
+    ];
+
+    let scopeCart = [];
+
+    function renderServices(items) {
+      const container = document.getElementById('services-container');
+      container.innerHTML = items.map(service => `
+        <div class="bg-dark-800 border border-dark-700 hover:border-brand-400/50 rounded-xl p-6 flex flex-col justify-between transition-all group">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-[10px] font-mono font-bold text-brand-400 bg-brand-400/10 border border-brand-400/30 px-2.5 py-1 rounded-full uppercase">${service.tag}</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">${service.title}</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-6">${service.desc}</p>
+          </div>
+          <button onclick="addToScope('${service.id}')" class="w-full bg-dark-700 hover:bg-brand-400 hover:text-white text-white font-semibold text-xs py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+            + Adicionar ao Escopo
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function filterServices(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-400', 'text-white');
+        btn.classList.add('bg-dark-800', 'text-gray-300');
+      });
+      event.target.classList.remove('bg-dark-800', 'text-gray-300');
+      event.target.classList.add('bg-brand-400', 'text-white');
+
+      if(category === 'all') renderServices(servicesList);
+      else renderServices(servicesList.filter(s => s.cat === category));
+    }
+
+    function addToScope(id) {
+      const item = servicesList.find(s => s.id === id);
+      if(!scopeCart.find(s => s.id === id)) {
+        scopeCart.push(item);
+        updateScopeUI();
+      }
+    }
+
+    function removeFromScope(id) {
+      scopeCart = scopeCart.filter(s => s.id !== id);
+      updateScopeUI();
+    }
+
+    function updateScopeUI() {
+      document.getElementById('scope-count').innerText = scopeCart.length;
+      const container = document.getElementById('selected-items');
+
+      if(scopeCart.length === 0) {
+        container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">Nenhum serviço selecionado ainda.</p>`;
+        return;
+      }
+
+      container.innerHTML = scopeCart.map(item => `
+        <div class="bg-dark-900 border border-dark-700 p-3 rounded-lg flex justify-between items-center">
+          <div>
+            <div class="text-xs font-bold text-white">${item.title}</div>
+            <div class="text-[10px] text-brand-400 font-mono">${item.tag}</div>
+          </div>
+          <button onclick="removeFromScope('${item.id}')" class="text-red-400 hover:text-red-300 text-xs font-bold px-2">Remover</button>
+        </div>
+      `).join('');
+    }
+
+    function sendToWhatsApp() {
+      if(scopeCart.length === 0) {
+        alert("Por favor, adicione pelo menos um serviço ao seu escopo.");
+        return;
+      }
+
+      const company = document.getElementById('input-company').value.trim();
+      const location = document.getElementById('input-location').value.trim();
+
+      if(!company || !location) {
+        alert("Preencha o Nome da Empresa e a Cidade para solicitar o atendimento.");
+        return;
+      }
+
+      let msg = `*SOLICITAÇÃO DE FIELD SERVICE / ATENDIMENTO - SYNC HUB*\n\n`;
+      msg += `*Empresa/Solicitante:* ${company}\n`;
+      msg += `*Localidade:* ${location}\n\n`;
+      msg += `*SERVIÇOS SELECIONADOS:*\n`;
+
+      scopeCart.forEach((item, idx) => {
+        msg += `${idx + 1}. ${item.title} (${item.tag})\n`;
+      });
+
+      msg += `\n_Aguardando contato para agendamento e orçamento._`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    document.getElementById('open-scope').onclick = () => {
+      document.getElementById('scope-drawer').classList.remove('hidden');
+      document.getElementById('scope-drawer').classList.add('flex');
+    };
+
+    document.getElementById('close-scope').onclick = () => {
+      document.getElementById('scope-drawer').classList.add('hidden');
+      document.getElementById('scope-drawer').classList.remove('flex');
+    };
+
+    renderServices(servicesList);
+    updateScopeUI();
+  </script>
+</body>
+</html>
