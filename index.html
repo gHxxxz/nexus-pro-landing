@@ -62,19 +62,16 @@
   <header class="sticky top-0 z-40 bg-dark-900/90 backdrop-blur-md border-b border-dark-700">
     <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
       
-      <!-- LOGÓTIPO VETORIAL (SVG INSPIRADO NA LOGO) -->
+      <!-- LOGÓTIPO VETORIAL -->
       <div class="flex items-center gap-3">
         <div class="w-12 h-12 rounded-xl bg-dark-800 border border-brand-400/30 flex items-center justify-center p-2 glow-brand">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-            <!-- Cabo e Conector RJ45 -->
             <path d="M 20 25 L 35 25 L 35 35 L 20 35 Z" fill="#0099ff" />
             <path d="M 23 20 L 26 20 L 26 25 L 23 25 Z" fill="#ffffff" />
             <path d="M 29 20 L 32 20 L 32 25 L 29 25 Z" fill="#ffffff" />
             <path d="M 35 30 C 45 30 45 65 30 65 C 20 65 20 50 35 45 L 50 45" stroke="#0099ff" stroke-width="4" stroke-linecap="round" fill="none" />
-            <!-- Marcador de Localização / Nós de Rede -->
             <path d="M 50 20 C 40 20 35 30 35 40 C 35 55 50 75 50 75 C 50 75 65 55 65 40 C 65 30 60 20 50 20 Z" stroke="#0099ff" stroke-width="4" fill="none" />
             <circle cx="50" cy="38" r="5" fill="#0099ff" />
-            <!-- Ligações de Conectividade -->
             <line x1="35" y1="65" x2="50" y2="75" stroke="#0099ff" stroke-width="3" />
             <line x1="50" y1="75" x2="65" y2="65" stroke="#0099ff" stroke-width="3" />
             <circle cx="35" cy="65" r="4" fill="#ffffff" />
@@ -157,32 +154,45 @@
     </div>
   </main>
 
-  <!-- DRAWER DO ESCOPO -->
+  <!-- DRAWER DO ESCOPO COM API DE CEP INTEGRADA -->
   <div id="scope-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden justify-end">
     <div class="bg-dark-800 w-full max-w-lg h-full border-l border-dark-700 p-6 flex flex-col justify-between overflow-y-auto">
       <div>
         <div class="flex items-center justify-between border-b border-dark-700 pb-4 mb-6">
           <div>
             <h3 class="text-xl font-bold text-white">Solicitação de Escopo</h3>
-            <p class="text-xs text-gray-400">Revise os serviços selecionados antes do envio</p>
+            <p class="text-xs text-gray-400">Revise os serviços e informe a localização técnica</p>
           </div>
           <button id="close-scope" class="text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
         </div>
 
-        <div id="selected-items" class="space-y-3">
+        <div id="selected-items" class="space-y-3 mb-6">
           <!-- Itens do escopo -->
         </div>
       </div>
 
-      <div class="border-t border-dark-700 pt-6 mt-6 space-y-4">
+      <div class="border-t border-dark-700 pt-6 space-y-4">
         <div>
-          <label class="block text-xs font-mono text-gray-400 mb-1">NOME DA EMPRESA / SOLICITANTE *</label>
+          <label class="block text-xs font-mono text-gray-400 mb-1">EMPRESA / SOLICITANTE *</label>
           <input type="text" id="input-company" placeholder="Ex: Tech Soluções / Carlos" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
         </div>
 
+        <!-- INTEGRANDO API DE CEP VIA REST -->
+        <div class="grid grid-cols-3 gap-2">
+          <div class="col-span-1">
+            <label class="block text-xs font-mono text-gray-400 mb-1">CEP *</label>
+            <input type="text" id="input-cep" placeholder="78000-000" maxlength="9" onblur="fetchAddressByCEP()" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none font-mono" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-xs font-mono text-gray-400 mb-1">CIDADE / UF *</label>
+            <input type="text" id="input-location" placeholder="Autopreenchido via CEP" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
+          </div>
+        </div>
+
         <div>
-          <label class="block text-xs font-mono text-gray-400 mb-1">CIDADE DA DEMANDA *</label>
-          <input type="text" id="input-location" placeholder="Ex: Cuiabá - MT" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
+          <label class="block text-xs font-mono text-gray-400 mb-1">LOGRADOURO / BAIRRO (OPCIONAL)</label>
+          <input type="text" id="input-street" placeholder="Rua, Número e Bairro do site" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
+          <p id="cep-loading" class="text-[10px] text-brand-400 font-mono mt-1 hidden">Consultando base do ViaCEP API...</p>
         </div>
 
         <button onclick="sendToWhatsApp()" class="w-full bg-brand-400 hover:bg-brand-500 text-white font-bold text-sm py-4 rounded-lg uppercase tracking-wider transition-all glow-brand flex items-center justify-center gap-2">
@@ -209,7 +219,6 @@
   </footer>
 
   <script>
-    // NÚMERO RETIRADO DIRETAMENTE DA LOGO DA SYNC PRO
     const WHATSAPP_NUMBER = "5565992762871";
 
     const servicesList = [
@@ -258,6 +267,31 @@
     ];
 
     let scopeCart = [];
+
+    // CONSUMO DA API REAL (VIACEP)
+    async function fetchAddressByCEP() {
+      const rawCep = document.getElementById('input-cep').value.replace(/\D/g, '');
+      const loadingEl = document.getElementById('cep-loading');
+      
+      if (rawCep.length === 8) {
+        loadingEl.classList.remove('hidden');
+        try {
+          const res = await fetch(`https://viacep.com.br/ws/${rawCep}/json/`);
+          const data = await res.json();
+          
+          if (!data.erro) {
+            document.getElementById('input-location').value = `${data.localidade} - ${data.uf}`;
+            document.getElementById('input-street').value = `${data.logradouro}${data.bairro ? ' - ' + data.bairro : ''}`;
+          } else {
+            alert("CEP não localizado na base de dados.");
+          }
+        } catch (err) {
+          console.error("Falha ao consultar API de CEP:", err);
+        } finally {
+          loadingEl.classList.add('hidden');
+        }
+      }
+    }
 
     function renderServices(items) {
       const container = document.getElementById('services-container');
@@ -330,16 +364,19 @@
 
       const company = document.getElementById('input-company').value.trim();
       const location = document.getElementById('input-location').value.trim();
+      const street = document.getElementById('input-street').value.trim();
+      const cep = document.getElementById('input-cep').value.trim();
 
       if(!company || !location) {
-        alert("Preencha o Nome da Empresa e a Cidade para solicitar o atendimento.");
+        alert("Preencha o Nome da Empresa e a Localidade/CEP para solicitar o atendimento.");
         return;
       }
 
       let msg = `*SOLICITAÇÃO DE FIELD SERVICE / ATENDIMENTO - SYNC HUB*\n\n`;
       msg += `*Empresa/Solicitante:* ${company}\n`;
-      msg += `*Localidade:* ${location}\n\n`;
-      msg += `*SERVIÇOS SELECIONADOS:*\n`;
+      msg += `*Localidade:* ${location} ${cep ? '(CEP: ' + cep + ')' : ''}\n`;
+      if (street) msg += `*Endereço do Site:* ${street}\n`;
+      msg += `\n*SERVIÇOS SELECIONADOS:*\n`;
 
       scopeCart.forEach((item, idx) => {
         msg += `${idx + 1}. ${item.title} (${item.tag})\n`;
