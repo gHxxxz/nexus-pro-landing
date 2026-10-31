@@ -221,12 +221,13 @@
 
   <script>
     // CONFIGURAÇÃO DO SUPABASE
-    // Substitua pelas credenciais do seu projeto no Supabase (Project Settings > API)
-    const SUPABASE_URL = "https://supabase.com/dashboard/project/auqpecchunnjfnswhpde";
-    const SUPABASE_ANON_KEY = "auqpecchunnjfnswhpde";
+    // A URL da API do projeto no formato correto
+    const SUPABASE_URL = "https://auqpecchunnjfnswhpde.supabase.co";
+    // Cole abaixo a sua chave 'anon public' encontrada em Project Settings > API no Supabase
+    const SUPABASE_ANON_KEY = "SUA_CHAVE_ANON_PUBLIC_AQUI"; 
     
-    // Inicialização do cliente Supabase (caso as chaves sejam fornecidas)
-    const supabase = (SUPABASE_URL !== "HTTPS://SEU-PROJETO.SUPABASE.CO") 
+    // Inicialização do cliente Supabase
+    const supabase = (SUPABASE_ANON_KEY !== "SUA_CHAVE_ANON_PUBLIC_AQUI") 
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
       : null;
 
@@ -384,7 +385,7 @@
         return;
       }
 
-      // 1. GRAVA OS DADOS NO SUPABASE (SE ESTIVER CONFIGURADO)
+      // 1. GRAVA OS DADOS NO SUPABASE (SE A ANON KEY ESTIVER CONFIGURADA)
       if (supabase) {
         try {
           await supabase.from('solicitacoes_escopo').insert([
