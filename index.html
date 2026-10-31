@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SYNC HUB | Tecnologia & Field Service B2B</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SUPABASE JS SDK (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -154,7 +156,7 @@
     </div>
   </main>
 
-  <!-- DRAWER DO ESCOPO COM API DE CEP INTEGRADA -->
+  <!-- DRAWER DO ESCOPO -->
   <div id="scope-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden justify-end">
     <div class="bg-dark-800 w-full max-w-lg h-full border-l border-dark-700 p-6 flex flex-col justify-between overflow-y-auto">
       <div>
@@ -177,7 +179,6 @@
           <input type="text" id="input-company" placeholder="Ex: Tech Soluções / Carlos" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
         </div>
 
-        <!-- INTEGRANDO API DE CEP VIA REST -->
         <div class="grid grid-cols-3 gap-2">
           <div class="col-span-1">
             <label class="block text-xs font-mono text-gray-400 mb-1">CEP *</label>
@@ -219,6 +220,16 @@
   </footer>
 
   <script>
+    // CONFIGURAÇÃO DO SUPABASE
+    // Substitua pelas credenciais do seu projeto no Supabase (Project Settings > API)
+    const SUPABASE_URL = "HTTPS://SEU-PROJETO.SUPABASE.CO";
+    const SUPABASE_ANON_KEY = "SUA_CHAVE_ANON_PUBLIC_AQUI";
+    
+    // Inicialização do cliente Supabase (caso as chaves sejam fornecidas)
+    const supabase = (SUPABASE_URL !== "HTTPS://SEU-PROJETO.SUPABASE.CO") 
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
+      : null;
+
     const WHATSAPP_NUMBER = "5565992762871";
 
     const servicesList = [
@@ -268,7 +279,7 @@
 
     let scopeCart = [];
 
-    // CONSUMO DA API REAL (VIACEP)
+    // CONSULTA API VIACEP
     async function fetchAddressByCEP() {
       const rawCep = document.getElementById('input-cep').value.replace(/\D/g, '');
       const loadingEl = document.getElementById('cep-loading');
@@ -356,7 +367,8 @@
       `).join('');
     }
 
-    function sendToWhatsApp() {
+    // GRAVAR NO SUPABASE E DISPARAR WHATSAPP
+    async function sendToWhatsApp() {
       if(scopeCart.length === 0) {
         alert("Por favor, adicione pelo menos um serviço ao seu escopo.");
         return;
@@ -372,6 +384,25 @@
         return;
       }
 
+      // 1. GRAVA OS DADOS NO SUPABASE (SE ESTIVER CONFIGURADO)
+      if (supabase) {
+        try {
+          await supabase.from('solicitacoes_escopo').insert([
+            {
+              empresa: company,
+              localizacao: location,
+              cep: cep,
+              endereco: street,
+              servicos: scopeCart.map(s => s.title),
+              criado_em: new Date().toISOString()
+            }
+          ]);
+        } catch (err) {
+          console.error("Erro ao salvar no Supabase:", err);
+        }
+      }
+
+      // 2. MONTA A MENSAGEM DO WHATSAPP
       let msg = `*SOLICITAÇÃO DE FIELD SERVICE / ATENDIMENTO - SYNC HUB*\n\n`;
       msg += `*Empresa/Solicitante:* ${company}\n`;
       msg += `*Localidade:* ${location} ${cep ? '(CEP: ' + cep + ')' : ''}\n`;
