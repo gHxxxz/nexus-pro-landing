@@ -221,18 +221,16 @@
 
   <script>
     // CONFIGURAÇÃO DO SUPABASE
-    // A URL da API do projeto no formato correto
     const SUPABASE_URL = "https://auqpecchunnjfnswhpde.supabase.co";
-    // Cole abaixo a sua chave 'anon public' encontrada em Project Settings > API no Supabase
     const SUPABASE_ANON_KEY = "auqpecchunnjfnswhpde"; 
     
-    // Inicialização do cliente Supabase
     const supabase = (SUPABASE_ANON_KEY !== "SUA_CHAVE_ANON_PUBLIC_AQUI") 
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
       : null;
 
     const WHATSAPP_NUMBER = "5565992762871";
 
+    // CATÁLOGO DE PRODUTOS/SERVIÇOS RESTAURADO
     const servicesList = [
       {
         id: "field-01",
@@ -385,7 +383,6 @@
         return;
       }
 
-      // 1. GRAVA OS DADOS NO SUPABASE (SE A ANON KEY ESTIVER CONFIGURADA)
       if (supabase) {
         try {
           await supabase.from('solicitacoes_escopo').insert([
@@ -403,7 +400,6 @@
         }
       }
 
-      // 2. MONTA A MENSAGEM DO WHATSAPP
       let msg = `*SOLICITAÇÃO DE FIELD SERVICE / ATENDIMENTO - SYNC HUB*\n\n`;
       msg += `*Empresa/Solicitante:* ${company}\n`;
       msg += `*Localidade:* ${location} ${cep ? '(CEP: ' + cep + ')' : ''}\n`;
@@ -429,6 +425,7 @@
       document.getElementById('scope-drawer').classList.remove('flex');
     };
 
+    // INICIALIZAÇÃO CORRETA DOS PRODUTOS NA TELA
     renderServices(servicesList);
     updateScopeUI();
   </script>
