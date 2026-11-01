@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-31T23:10:14-04:00",
+  "title": "Design System: NEXUS PRO",
+  "extensions": {
+    "colorMeta": {
+      "accent-red": {
+        "role": "primary",
+        "displayName": "Signal Red",
+        "canonical": "#e51c33",
+        "tonalRamp": ["#450000", "#690000", "#8d0000", "#b20000", "#d60026", "#fb3b46", "#ff7373", "#ffa7a3"]
+      },
+      "accent-red-deep": {
+        "role": "primary",
+        "displayName": "Deep Signal Red",
+        "canonical": "#c61027",
+        "tonalRamp": ["#400000", "#640000", "#870000", "#ab000c", "#cf202e", "#f3494c", "#ff7d7a", "#ffb0a9"]
+      },
+      "whatsapp-green": {
+        "role": "tertiary",
+        "displayName": "WhatsApp Green",
+        "canonical": "#20c56a",
+        "tonalRamp": ["#001900", "#003400", "#005100", "#006f14", "#008d35", "#00ad53", "#47de81", "#81ffb1"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#09090b",
+        "tonalRamp": ["#0b0b0d", "#212124", "#3a3a3d", "#555558", "#717174", "#8f8f92", "#bdbdc0", "#eeeef1"]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#101013",
+        "tonalRamp": ["#0b0b0e", "#212125", "#3a3a3e", "#555559", "#717175", "#8f8f93", "#bdbdc2", "#eeeef2"]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Divider Charcoal",
+        "canonical": "#29292e",
+        "tonalRamp": ["#0b0b0f", "#212126", "#3a3a3f", "#55555a", "#717177", "#8e8e95", "#bdbdc3", "#eeeef4"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Soft Paper",
+        "canonical": "#f7f7f8",
+        "tonalRamp": ["#0b0b0c", "#212122", "#3a3a3b", "#555556", "#717172", "#8f8f90", "#bdbdbe", "#eeeeef"]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#0b0b0b", "#222222", "#3a3a3a", "#555555", "#717171", "#8f8f8f", "#bebebe", "#eeeeee"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero promise; mobile uses the separate responsive clamp documented in DESIGN.md."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default supporting and reading copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Compact uppercase section eyebrows."
+      }
+    },
+    "shadows": [
+      {
+        "name": "contact-form",
+        "value": "0 24px 60px rgba(0, 0, 0, 0.28)",
+        "purpose": "Separates the inquiry form from the dark contact backdrop."
+      },
+      {
+        "name": "whatsapp-float",
+        "value": "0 8px 26px rgba(0, 0, 0, 0.38)",
+        "purpose": "Gives the fixed WhatsApp action separation from the page edge."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-transition",
+        "value": "180ms ease",
+        "purpose": "Button, navigation, and text-link state transitions."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Transition and animation duration when prefers-reduced-motion is enabled."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "layout-stack",
+        "value": "900px"
+      },
+      {
+        "name": "mobile",
+        "value": "700px"
+      },
+      {
+        "name": "narrow",
+        "value": "420px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Red pill action; hover shifts to deep red and rises slightly.",
+      "html": "<button class=\"ds-button-primary\" type=\"button\">Falar no WhatsApp <span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-button-primary { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 0.65rem; border: 1px solid transparent; border-radius: 999px; padding: 0.8rem 1.35rem; background: var(--red, #e51c33); color: #fff; font: 800 0.82rem/1 Manrope, 'Segoe UI', sans-serif; transition: background 180ms ease, border-color 180ms ease, transform 180ms ease; cursor: pointer; } .ds-button-primary:hover { transform: translateY(-2px); background: var(--red-dark, #c61027); } .ds-button-primary:active { transform: translateY(0); } .ds-button-primary:focus-visible { outline: 3px solid #ff7785; outline-offset: 4px; }"
+    },
+    {
+      "name": "Outline CTA",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Transparent secondary action with a light outline and red hover treatment.",
+      "html": "<button class=\"ds-button-outline\" type=\"button\">Conhecer soluções <span aria-hidden=\"true\">↓</span></button>",
+      "css": ".ds-button-outline { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 0.65rem; border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 999px; padding: 0.8rem 1.35rem; background: transparent; color: #fff; font: 800 0.82rem/1 Manrope, 'Segoe UI', sans-serif; transition: background 180ms ease, border-color 180ms ease, transform 180ms ease; cursor: pointer; } .ds-button-outline:hover { border-color: #e51c33; background: rgba(242, 31, 53, 0.1); } .ds-button-outline:active { transform: translateY(0); } .ds-button-outline:focus-visible { outline: 3px solid #ff7785; outline-offset: 4px; }"
+    },
+    {
+      "name": "Form Submit Button",
+      "kind": "button",
+      "refersTo": "button-form-submit",
+      "description": "Full-width red form action with the field group's smaller corner radius.",
+      "html": "<button class=\"ds-form-submit\" type=\"submit\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"m21 3-7.2 18-3.8-7-7-3.8L21 3Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/><path d=\"m10 14 4.5-4.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg>Continuar pelo WhatsApp</button>",
+      "css": ".ds-form-submit { display: inline-flex; width: 100%; min-height: 48px; align-items: center; justify-content: center; gap: 0.65rem; border: 1px solid transparent; border-radius: 8px; padding: 0.8rem 1.35rem; background: #e51c33; color: #fff; font: 800 0.82rem/1 Manrope, 'Segoe UI', sans-serif; transition: background 180ms ease, border-color 180ms ease, transform 180ms ease; cursor: pointer; } .ds-form-submit svg { width: 17px; height: 17px; flex: 0 0 auto; } .ds-form-submit:hover { transform: translateY(-2px); background: #c61027; } .ds-form-submit:active { transform: translateY(0); } .ds-form-submit:focus-visible { outline: 3px solid #ff7785; outline-offset: 4px; }"
+    },
+    {
+      "name": "Contact Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Dark native text field with neutral stroke, light placeholder, and red focus border.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Seu e-mail <span aria-hidden=\"true\">*</span></span><input class=\"ds-field-input\" type=\"email\" placeholder=\"voce@empresa.com.br\" required /></label>",
+      "css": ".ds-field { display: grid; gap: 0.4rem; color: #e0e0e3; font: 700 0.72rem/1.4 Manrope, 'Segoe UI', sans-serif; } .ds-field-input { width: 100%; min-height: 46px; border: 1px solid #343438; border-radius: 8px; padding: 0.7rem 0.8rem; background: #0c0c0e; color: #fff; font: 400 0.8rem/1.5 Manrope, 'Segoe UI', sans-serif; } .ds-field-input::placeholder { color: #a5a5ab; opacity: 1; } .ds-field-input:focus { border-color: #ff6676; } .ds-field-input:focus-visible { outline: 3px solid #ff7785; outline-offset: 4px; }"
+    },
+    {
+      "name": "Contact Form Surface",
+      "kind": "card",
+      "refersTo": "contact-form",
+      "description": "Dark bordered form surface with restrained elevation and a responsive two-column field grid.",
+      "html": "<form class=\"ds-contact-form\"><label class=\"ds-contact-form-field\">Seu nome<input type=\"text\" required /></label><label class=\"ds-contact-form-field\">Seu e-mail<input type=\"email\" required /></label><button class=\"ds-contact-form-submit\" type=\"submit\">Continuar pelo WhatsApp</button></form>",
+      "css": ".ds-contact-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; border: 1px solid #35353a; border-radius: 16px; padding: clamp(1rem, 2.5vw, 1.5rem); background: rgba(17, 17, 20, 0.93); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28); } .ds-contact-form-field { display: grid; gap: 0.4rem; color: #e0e0e3; font: 700 0.72rem/1.4 Manrope, 'Segoe UI', sans-serif; } .ds-contact-form-field input { width: 100%; min-height: 46px; border: 1px solid #343438; border-radius: 8px; padding: 0.7rem 0.8rem; background: #0c0c0e; color: #fff; font: 400 0.8rem/1.5 Manrope, 'Segoe UI', sans-serif; } .ds-contact-form-submit { grid-column: 1 / -1; min-height: 48px; border: 1px solid transparent; border-radius: 8px; padding: 0.8rem 1.35rem; background: #e51c33; color: #fff; font: 800 0.82rem/1 Manrope, 'Segoe UI', sans-serif; cursor: pointer; } .ds-contact-form-submit:hover { background: #c61027; } .ds-contact-form-submit:focus-visible { outline: 3px solid #ff7785; outline-offset: 4px; } @media (max-width: 420px) { .ds-contact-form { grid-template-columns: 1fr; } .ds-contact-form-submit { grid-column: auto; } }"
+    },
+    {
+      "name": "Section Navigation",
+      "kind": "nav",
+      "description": "Compact anchored links with an underline for the current section.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Navegação principal\"><a href=\"#inicio\" aria-current=\"page\">Início</a><a href=\"#solucoes\">Soluções</a><a href=\"#contato\">Contato</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2rem); color: #dedee1; font: 600 0.82rem/1.4 Manrope, 'Segoe UI', sans-serif; } .ds-nav a { position: relative; padding-block: 0.6rem; color: inherit; text-decoration: none; transition: color 180ms ease; } .ds-nav a:hover, .ds-nav a[aria-current='page'] { color: #fff; } .ds-nav a[aria-current='page']::after { position: absolute; right: 0; bottom: 0; left: 0; height: 2px; background: #e51c33; content: ''; } .ds-nav a:focus-visible { outline: 3px solid #ff7785; outline-offset: 4px; }"
+    },
+    {
+      "name": "WhatsApp Floating Action",
+      "kind": "button",
+      "refersTo": "whatsapp-float",
+      "description": "Fixed circular green contact action with a white icon and restrained shadow.",
+      "html": "<a class=\"ds-whatsapp-float\" href=\"#contato\" aria-label=\"Fale com a NEXUS PRO pelo WhatsApp\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M20 11.6a8.1 8.1 0 0 1-12 7.1L4 20l1.3-3.8A8.1 8.1 0 1 1 20 11.6Z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\"/><path d=\"M9 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4 0 .7.4.7 1.1 1.3 1.8 1.7.3.2.5.2.7-.1l.7-.8c.2-.2.4-.2.7-.1l1.6.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-1.9.6-1.1-.2-2.4-.8-3.7-2-1.5-1.3-2.3-2.8-2.5-3.9-.2-.9.1-1.5.4-1.8Z\" fill=\"currentColor\"/></svg></a>",
+      "css": ".ds-whatsapp-float { display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid rgba(255, 255, 255, 0.26); border-radius: 50%; background: var(--green, #20c56a); color: #fff; box-shadow: 0 8px 26px rgba(0, 0, 0, 0.38); transition: transform 180ms ease, background 180ms ease; } .ds-whatsapp-float svg { width: 28px; height: 28px; } .ds-whatsapp-float:hover { transform: translateY(-3px); background: #17aa58; } .ds-whatsapp-float:focus-visible { outline: 3px solid #ff7785; outline-offset: 4px; }"
+    },
+    {
+      "name": "Three-Step Process Item",
+      "kind": "custom",
+      "description": "Flat process step with circular outlined icon, red sequence number, and subdued copy.",
+      "html": "<article class=\"ds-process-step\"><div class=\"ds-process-top\"><span class=\"ds-process-icon\" aria-hidden=\"true\">↗</span><span class=\"ds-process-count\">01</span></div><h3>Captação</h3><p>Campanhas e conteúdos para alcançar novos públicos.</p></article>",
+      "css": ".ds-process-step { position: relative; min-width: 0; color: #fff; font-family: Manrope, 'Segoe UI', sans-serif; } .ds-process-top { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; } .ds-process-icon { display: grid; width: 58px; height: 58px; flex: 0 0 auto; place-items: center; border: 1px solid #d4d4d7; border-radius: 50%; color: #fff; font-size: 1.25rem; } .ds-process-count { color: #ff4357; font-size: 0.68rem; font-weight: 800; } .ds-process-step h3 { margin: 0 0 0.25rem; font-size: 0.9rem; font-weight: 800; letter-spacing: -0.02em; } .ds-process-step p { max-width: 21ch; margin: 0; color: #bdbdc2; font-size: 0.76rem; line-height: 1.45; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Connected Signal",
+    "overview": "NEXUS PRO's single-page world makes the connection between acquisition, service, and conversion feel like one clear path. Charcoal surfaces carry the content; vivid red marks the brand, key actions, and directional geometry. Office photography gives the promise a real-world setting, while thin dividers keep each section precise.\n\nOne Manrope family supplies every role: compact, tightly tracked heavy headlines lead; readable body copy and small uppercase labels support them. The responsive page preserves that contrast and its clear path to a WhatsApp-composed inquiry.",
+    "keyCharacteristics": [
+      "Charcoal-first surfaces with a concentrated red signal.",
+      "One geometric sans family, differentiated by size and weight.",
+      "Section structure drawn with fine dividers, not ornamental cards."
+    ],
+    "rules": [
+      {
+        "name": "The Red Signal Rule",
+        "body": "Red carries the main brand and conversion emphasis; keep charcoal and light neutrals dominant. Green belongs to the floating WhatsApp contact control, not a second general-purpose accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Typeface Rule",
+        "body": "Keep brand, navigation, headings, labels, and controls in the same Manrope-led stack; create hierarchy with size, weight, and tracking.",
+        "section": "typography"
+      },
+      {
+        "name": "The Connected Sections Rule",
+        "body": "Use the page's section sequence to carry the visitor from promise, through the three-step flow, to contact; keep navigation anchored to those sections.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Convey section depth with tone and dividers; reserve shadows for the two implemented contact surfaces.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep charcoal as the dominant surface and use red as the main brand/action signal.",
+      "Do preserve the single Manrope-led type family and build hierarchy through size, weight, and tracking.",
+      "Do use thin dividers and tonal gradients to organize sections before adding elevation.",
+      "Do keep the mobile navigation, responsive section stacking, visible focus, and reduced-motion behavior."
+    ],
+    "donts": [
+      "Don't promote the WhatsApp green to a general-purpose accent; it identifies the floating contact action.",
+      "Don't imply the contact form stores or sends data to a backend; it opens a prefilled WhatsApp conversation.",
+      "Don't add a second display typeface or a broad shadow treatment absent from the implementation."
+    ]
+  }
+}

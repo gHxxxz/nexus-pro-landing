@@ -1,433 +1,1427 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SYNC HUB | Tecnologia & Field Service B2B</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- SUPABASE JS SDK (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#e6f4ff',
-              400: '#0099ff',
-              500: '#0088ee',
-              600: '#0077cc',
-            },
-            dark: {
-              900: '#090b10',
-              800: '#11141f',
-              700: '#1a1f2e',
-              600: '#252c40'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          }
-        }
+  <meta name="theme-color" content="#09090b" />
+  <meta name="description" content="A NEXUS PRO conecta marketing, atendimento e tecnologia para transformar conversas em oportunidades de negócio." />
+  <title>NEXUS PRO | Soluções em tecnologia e crescimento</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2309090b'/%3E%3Cpath d='M13 49V15l9-6 10 6 10-6 9 6v34l-9 6-10-6-10 6-9-6Zm9-23v14l10-6 10 6V26l-10 6-10-6Z' fill='%23f21f35'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #09090b;
+      --ink-soft: #101013;
+      --panel: #151518;
+      --line: #29292e;
+      --paper: #f7f7f8;
+      --muted: #a4a4ab;
+      --red: #e51c33;
+      --red-dark: #c61027;
+      --green: #20c56a;
+      --content: 1160px;
+      --gutter: clamp(1.25rem, 5vw, 4.5rem);
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 6rem;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      background: var(--ink);
+      color: var(--paper);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body,
+    button,
+    input,
+    textarea {
+      font-family: "Manrope", "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #ff7785;
+      outline-offset: 4px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 0.75rem;
+      left: 0.75rem;
+      transform: translateY(-160%);
+      border-radius: 0.5rem;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 0.75rem 1rem;
+      font-weight: 800;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .container {
+      width: min(100% - var(--gutter) * 2, var(--content));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(9, 9, 11, 0.96);
+    }
+
+    .header-inner {
+      display: flex;
+      min-height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      color: var(--red);
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 0.03rem;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.26rem;
+      font-weight: 800;
+      letter-spacing: -0.055em;
+    }
+
+    .brand-name span {
+      color: var(--red);
+    }
+
+    .brand-caption {
+      margin-top: 0.32rem;
+      color: #a8a8ad;
+      font-size: 0.45rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2.5vw, 2rem);
+      color: #dedee1;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .site-nav a {
+      position: relative;
+      padding-block: 0.6rem;
+      transition: color 180ms ease;
+    }
+
+    .site-nav a:hover,
+    .site-nav a[aria-current="page"] {
+      color: #fff;
+    }
+
+    .site-nav a[aria-current="page"]::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--red);
+      content: "";
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.8rem 1.35rem;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      line-height: 1;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--red-dark);
+    }
+
+    .button svg {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 auto;
+    }
+
+    .button-outline {
+      border-color: rgba(255, 255, 255, 0.7);
+      background: transparent;
+    }
+
+    .button-outline:hover {
+      border-color: var(--red);
+      background: rgba(242, 31, 53, 0.1);
+    }
+
+    .header-cta {
+      min-height: 42px;
+      padding-inline: 1.2rem;
+      font-size: 0.75rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--ink-soft);
+      color: white;
+      cursor: pointer;
+    }
+
+    .menu-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 470px;
+      align-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      isolation: isolate;
+    }
+
+    .hero::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background:
+        linear-gradient(90deg, #09090b 0%, #09090b 37%, rgba(9, 9, 11, 0.9) 50%, rgba(9, 9, 11, 0.32) 70%, rgba(9, 9, 11, 0.08) 100%),
+        linear-gradient(0deg, rgba(9, 9, 11, 0.38), transparent 40%);
+      content: "";
+    }
+
+    .hero-media {
+      position: absolute;
+      z-index: -2;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 61%;
+      overflow: hidden;
+      background: #101013;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      top: -8rem;
+      left: 54%;
+      width: 2px;
+      height: 46rem;
+      transform: rotate(17deg);
+      background: linear-gradient(transparent, var(--red), transparent);
+      content: "";
+      opacity: 0.9;
+    }
+
+    .hero-content {
+      width: min(100%, 660px);
+      padding-block: clamp(3rem, 5vw, 4rem);
+    }
+
+    .hero h1 {
+      max-width: 660px;
+      margin: 0;
+      font-size: clamp(2.8rem, 4.7vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.065em;
+      line-height: 0.99;
+      text-wrap: balance;
+    }
+
+    .hero h1 span {
+      color: var(--red);
+    }
+
+    .hero-copy {
+      max-width: 56ch;
+      margin: 1.45rem 0 0;
+      color: #d3d3d6;
+      font-size: clamp(1rem, 1.5vw, 1.12rem);
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1.7rem;
+    }
+
+    .trust-note {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 1.7rem;
+      color: #e0e0e2;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .trust-mark {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(242, 31, 53, 0.55);
+      border-radius: 50%;
+      background: rgba(242, 31, 53, 0.12);
+      color: #ff5265;
+    }
+
+    .trust-mark svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .benefit-band {
+      border-bottom: 1px solid var(--line);
+      background: #0c0c0e;
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding-block: 1.8rem;
+    }
+
+    .benefit {
+      display: grid;
+      grid-template-columns: 35px 1fr;
+      align-content: start;
+      gap: 0.85rem;
+      padding: 0.45rem clamp(0.75rem, 2.6vw, 2rem);
+    }
+
+    .benefit + .benefit {
+      border-left: 1px solid #37373b;
+    }
+
+    .benefit:first-child {
+      padding-left: 0;
+    }
+
+    .benefit:last-child {
+      padding-right: 0;
+    }
+
+    .benefit-icon {
+      width: 29px;
+      height: 29px;
+      color: var(--red);
+    }
+
+    .benefit h2 {
+      margin: 0 0 0.25rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+
+    .benefit p {
+      max-width: 25ch;
+      margin: 0;
+      color: #b7b7bd;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      min-height: 340px;
+      border-bottom: 1px solid var(--line);
+      background: var(--ink);
+    }
+
+    .about-image {
+      position: relative;
+      min-height: 340px;
+      overflow: hidden;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 340px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .about-image::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 62%, var(--ink) 100%), linear-gradient(0deg, rgba(9, 9, 11, 0.38), transparent 55%);
+      content: "";
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 155px;
+      align-items: center;
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      padding: 3.5rem var(--gutter) 3.5rem clamp(0rem, 2vw, 2rem);
+    }
+
+    .eyebrow {
+      margin: 0 0 0.55rem;
+      color: #ff4357;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .about-copy h2,
+    .process-intro h2,
+    .contact-copy h2 {
+      margin: 0;
+      font-size: clamp(1.75rem, 3vw, 2.45rem);
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+
+    .about-copy > p:not(.eyebrow) {
+      max-width: 55ch;
+      margin: 0.8rem 0 1.15rem;
+      color: #bdbdc2;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .text-link span {
+      color: var(--red);
+      transition: transform 180ms ease;
+    }
+
+    .text-link:hover span {
+      transform: translateX(4px);
+    }
+
+    .about-stats {
+      display: grid;
+      gap: 1.1rem;
+      border-left: 1px solid #39393e;
+      padding-left: 1.4rem;
+    }
+
+    .about-stat strong {
+      display: block;
+      color: var(--red);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+    .about-stat span {
+      display: block;
+      margin-top: 0.2rem;
+      color: #d2d2d6;
+      font-size: 0.73rem;
+      line-height: 1.4;
+    }
+
+    .process {
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(ellipse at 2% 100%, rgba(242, 31, 53, 0.1), transparent 30%),
+        #0c0c0e;
+    }
+
+    .process-inner {
+      display: grid;
+      grid-template-columns: 0.95fr 1.55fr;
+      align-items: center;
+      gap: clamp(2rem, 7vw, 6.5rem);
+      padding-block: clamp(3.5rem, 7vw, 5rem);
+    }
+
+    .process-intro > p:not(.eyebrow) {
+      max-width: 42ch;
+      margin: 0.75rem 0 1.2rem;
+      color: #bdbdc2;
+      font-size: 0.9rem;
+    }
+
+    .process-intro .button {
+      min-height: 42px;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.75rem;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .process-step {
+      position: relative;
+      min-width: 0;
+    }
+
+    .process-step:not(:last-child)::after {
+      position: absolute;
+      top: 29px;
+      left: calc(58px + 0.75rem);
+      width: calc(100% - 58px - 1.4rem);
+      height: 1px;
+      background: #4a4a50;
+      content: "";
+    }
+
+    .step-top {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .step-icon {
+      display: grid;
+      width: 58px;
+      height: 58px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid #d4d4d7;
+      border-radius: 50%;
+      color: #fff;
+    }
+
+    .step-icon svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .step-count {
+      color: #ff4357;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .process-step h3 {
+      margin: 0 0 0.25rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .process-step p {
+      max-width: 21ch;
+      margin: 0;
+      color: #bdbdc2;
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    .contact {
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(ellipse at 0% 50%, rgba(242, 31, 53, 0.15), transparent 33%),
+        linear-gradient(120deg, #111113 0%, #09090b 53%, #101013 100%);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      align-items: center;
+      gap: clamp(2rem, 7vw, 6rem);
+      padding-block: clamp(3.5rem, 7vw, 5rem);
+    }
+
+    .contact-copy h2 {
+      font-size: clamp(2rem, 3.8vw, 3rem);
+    }
+
+    .contact-copy > p {
+      max-width: 39ch;
+      margin: 0.7rem 0 1.3rem;
+      color: #c1c1c5;
+      font-size: 0.9rem;
+    }
+
+    .contact-details {
+      display: grid;
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .contact-details a,
+    .contact-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: #f1f1f2;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .contact-details svg,
+    .contact-location svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      color: var(--red);
+    }
+
+    .contact-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+      border: 1px solid #35353a;
+      border-radius: 16px;
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+      background: rgba(17, 17, 20, 0.93);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .field {
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .field label {
+      color: #e0e0e3;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid #343438;
+      border-radius: 8px;
+      padding: 0.7rem 0.8rem;
+      background: #0c0c0e;
+      color: #fff;
+      font-size: 0.8rem;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #a5a5ab;
+      opacity: 1;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: #ff6676;
+    }
+
+    .field-message {
+      grid-column: 1 / -1;
+    }
+
+    .field textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      grid-column: 1 / -1;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .form-note,
+    .form-status {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: #b7b7bd;
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    .form-status:empty {
+      display: none;
+    }
+
+    .site-footer {
+      background: #09090b;
+    }
+
+    .footer-inner {
+      display: flex;
+      min-height: 88px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-block: 1.25rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: clamp(0.8rem, 2vw, 1.6rem);
+      color: #dedee1;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover {
+      color: var(--red);
+    }
+
+    .copyright {
+      color: #96969d;
+      font-size: 0.68rem;
+      text-align: right;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      z-index: 15;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.38);
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .whatsapp-float:hover {
+      transform: translateY(-3px);
+      background: #17aa58;
+    }
+
+    .whatsapp-float svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .site-nav {
+        gap: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .header-cta {
+        padding-inline: 0.9rem;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+      }
+
+      .about-stats {
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid #39393e;
+        border-left: 0;
+        padding-top: 1.2rem;
+        padding-left: 0;
+      }
+
+      .process-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .process-intro {
+        max-width: 560px;
       }
     }
-  </script>
-  <style>
-    .glow-brand {
-      box-shadow: 0 0 20px rgba(0, 153, 255, 0.25);
+
+    @media (max-width: 700px) {
+      :root {
+        --gutter: 1.25rem;
+      }
+
+      .header-inner {
+        min-height: 68px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      .brand-name {
+        font-size: 1.15rem;
+      }
+
+      .header-cta {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .site-nav {
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: 0;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 0.5rem var(--gutter) 1rem;
+        background: #0b0b0d;
+        font-size: 0.92rem;
+      }
+
+      .site-nav.is-open {
+        display: grid;
+      }
+
+      .site-nav a {
+        border-bottom: 1px solid #242428;
+        padding: 0.85rem 0;
+      }
+
+      .site-nav a:last-child {
+        border-bottom: 0;
+      }
+
+      .site-nav a[aria-current="page"]::after {
+        right: auto;
+        width: 2.2rem;
+      }
+
+      .hero {
+        min-height: 590px;
+      }
+
+      .hero::before {
+        background: linear-gradient(0deg, #09090b 0%, rgba(9, 9, 11, 0.88) 43%, rgba(9, 9, 11, 0.22) 100%);
+      }
+
+      .hero-media {
+        right: 0;
+        bottom: auto;
+        left: 0;
+        width: 100%;
+        height: 74%;
+      }
+
+      .hero::after {
+        top: 0;
+        left: 75%;
+        height: 35rem;
+        opacity: 0.48;
+      }
+
+      .hero-content {
+        align-self: end;
+        padding-block: 4rem 3rem;
+      }
+
+      .hero h1 {
+        max-width: 100%;
+        font-size: clamp(2.55rem, 11vw, 3.3rem);
+      }
+
+      .hero-copy {
+        max-width: 43ch;
+        font-size: 0.96rem;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+      }
+
+      .hero-actions .button {
+        min-height: 46px;
+        padding-inline: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .benefits {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 1.3rem;
+        padding-block: 1.4rem;
+      }
+
+      .benefit {
+        padding: 0.25rem 0.8rem;
+      }
+
+      .benefit:nth-child(odd) {
+        border-left: 0;
+        padding-left: 0;
+      }
+
+      .benefit:nth-child(even) {
+        padding-right: 0;
+      }
+
+      .benefit:nth-child(n + 3) {
+        border-top: 1px solid #37373b;
+        padding-top: 1.1rem;
+      }
+
+      .benefit h2 {
+        font-size: 0.8rem;
+      }
+
+      .benefit p {
+        font-size: 0.72rem;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .about-image,
+      .about-image img {
+        min-height: 240px;
+        max-height: 300px;
+      }
+
+      .about-image::after {
+        background: linear-gradient(0deg, var(--ink), transparent 45%);
+      }
+
+      .about-content {
+        padding: 0.5rem var(--gutter) 3rem;
+      }
+
+      .about-stats {
+        gap: 0.8rem;
+      }
+
+      .about-stat strong {
+        font-size: 1.15rem;
+      }
+
+      .about-stat span {
+        font-size: 0.67rem;
+      }
+
+      .process-steps {
+        gap: 0.85rem;
+      }
+
+      .process-step:not(:last-child)::after {
+        top: 24px;
+        left: calc(48px + 0.35rem);
+        width: calc(100% - 48px - 0.7rem);
+      }
+
+      .step-top {
+        gap: 0.45rem;
+      }
+
+      .step-icon {
+        width: 48px;
+        height: 48px;
+      }
+
+      .step-icon svg {
+        width: 21px;
+        height: 21px;
+      }
+
+      .step-count {
+        font-size: 0.61rem;
+      }
+
+      .process-step h3 {
+        font-size: 0.78rem;
+      }
+
+      .process-step p {
+        font-size: 0.68rem;
+      }
+
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .contact-form {
+        gap: 0.7rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .footer-nav {
+        justify-content: flex-start;
+        gap: 0.75rem 1.15rem;
+      }
+
+      .copyright {
+        text-align: left;
+      }
+
+      .whatsapp-float {
+        right: 0.9rem;
+        bottom: 0.9rem;
+        width: 50px;
+        height: 50px;
+      }
     }
-    .glow-brand-lg {
-      box-shadow: 0 0 35px rgba(0, 153, 255, 0.35);
+
+    @media (max-width: 420px) {
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+        gap: 1.1rem;
+      }
+
+      .process-step {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        column-gap: 0.85rem;
+        align-items: start;
+      }
+
+      .process-step:not(:last-child)::after {
+        top: 52px;
+        left: 24px;
+        width: 1px;
+        height: calc(100% - 42px);
+      }
+
+      .step-top {
+        grid-row: span 2;
+        align-items: flex-start;
+        margin: 0;
+      }
+
+      .step-count {
+        display: none;
+      }
+
+      .process-step h3 {
+        padding-top: 0.25rem;
+        font-size: 0.9rem;
+      }
+
+      .process-step p {
+        max-width: 38ch;
+        font-size: 0.75rem;
+      }
+
+      .contact-form {
+        grid-template-columns: 1fr;
+      }
+
+      .field-message,
+      .form-submit,
+      .form-note,
+      .form-status {
+        grid-column: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
-<body class="bg-dark-900 text-gray-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-400 selection:text-white">
+<body>
+  <!--
+    THESIS: Connect lead acquisition, customer service, and conversion instead of presenting disconnected tools.
+    OWN-WORLD: Charcoal surfaces, vivid red geometry, white Manrope typography, and precise thin dividers.
+    STORY: Visitors understand the offer, see its three-step flow, and start a real conversation.
+    FIRST VIEWPORT: Brand and navigation above a left-aligned promise, two actions, and a full-bleed office image on the right.
+    FORM: Persuade landing, first-ranked single-page split hero; anchored sections lead to a WhatsApp-composed inquiry.
+  -->
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- BARRA DE STATUS SUPERIOR -->
-  <div class="bg-dark-800 border-b border-dark-700 py-2 px-4 text-center text-xs font-mono text-gray-400">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
-        <span class="text-white font-semibold">SUPORTE TÉCNICO B2B</span>
-        <span class="hidden sm:inline text-gray-500">| Atendimento em Campo, Cabling & Infraestrutura</span>
-      </div>
-      <div class="text-brand-400 font-semibold">Cuiabá - Mato Grosso</div>
-    </div>
-  </div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="NEXUS PRO — início">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <path d="M5 38V10.5L12 6l12 7.5 12-7.5 7 4.5v27l-7 4.5L24 34 12 41.5 5 38Z" fill="currentColor" />
+          <path d="M12 15v20l12-7.5L36 35V15L24 22.5 12 15Z" fill="#09090b" />
+          <path d="M12 14.8 24 22l12-7.2" stroke="#09090b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="brand-copy">
+          <span class="brand-name">NEXUS <span>PRO</span></span>
+          <span class="brand-caption">Soluções em tecnologia</span>
+        </span>
+      </a>
 
-  <!-- CABEÇALHO / NAVBAR -->
-  <header class="sticky top-0 z-40 bg-dark-900/90 backdrop-blur-md border-b border-dark-700">
-    <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-      
-      <!-- LOGÓTIPO VETORIAL -->
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-xl bg-dark-800 border border-brand-400/30 flex items-center justify-center p-2 glow-brand">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-            <path d="M 20 25 L 35 25 L 35 35 L 20 35 Z" fill="#0099ff" />
-            <path d="M 23 20 L 26 20 L 26 25 L 23 25 Z" fill="#ffffff" />
-            <path d="M 29 20 L 32 20 L 32 25 L 29 25 Z" fill="#ffffff" />
-            <path d="M 35 30 C 45 30 45 65 30 65 C 20 65 20 50 35 45 L 50 45" stroke="#0099ff" stroke-width="4" stroke-linecap="round" fill="none" />
-            <path d="M 50 20 C 40 20 35 30 35 40 C 35 55 50 75 50 75 C 50 75 65 55 65 40 C 65 30 60 20 50 20 Z" stroke="#0099ff" stroke-width="4" fill="none" />
-            <circle cx="50" cy="38" r="5" fill="#0099ff" />
-            <line x1="35" y1="65" x2="50" y2="75" stroke="#0099ff" stroke-width="3" />
-            <line x1="50" y1="75" x2="65" y2="65" stroke="#0099ff" stroke-width="3" />
-            <circle cx="35" cy="65" r="4" fill="#ffffff" />
-            <circle cx="65" cy="65" r="4" fill="#ffffff" />
-            <circle cx="50" cy="75" r="4" fill="#0099ff" />
-          </svg>
-        </div>
-        <div>
-          <span class="text-2xl font-extrabold tracking-tight text-white">SYNC <span class="text-brand-400">HUB</span></span>
-          <p class="text-[10px] text-gray-400 font-mono uppercase tracking-wider">Field Service • Cabling • TI</p>
-        </div>
-      </div>
+      <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
+        <a href="#inicio" aria-current="page">Início</a>
+        <a href="#solucoes">Soluções</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#processo">Como funciona</a>
+        <a href="#contato">Contato</a>
+      </nav>
 
-      <div class="flex items-center gap-4">
-        <button id="open-scope" class="relative bg-brand-400 hover:bg-brand-500 text-white font-bold text-xs uppercase px-5 py-3 rounded-lg transition-all glow-brand flex items-center gap-2">
-          <span>MEU ESCOPO</span>
-          <span id="scope-count" class="bg-black text-brand-400 text-xs px-2 py-0.5 rounded-full font-mono font-bold">0</span>
-        </button>
-      </div>
+      <a class="button header-cta" href="https://wa.me/5565992762871?text=Ol%C3%A1%2C%20gostaria%20de%20conhecer%20as%20solu%C3%A7%C3%B5es%20NEXUS%20PRO." target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 3-7.2 18-3.8-7-7-3.8L21 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m10 14 4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Falar no WhatsApp
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="site-nav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="relative py-20 px-4 overflow-hidden border-b border-dark-700 bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900">
-    <div class="max-w-5xl mx-auto text-center space-y-6 relative z-10">
-      <div class="inline-flex items-center gap-2 bg-brand-400/10 border border-brand-400/30 px-4 py-1.5 rounded-full text-xs font-mono text-brand-400">
-        <span class="w-2 h-2 rounded-full bg-brand-400"></span> TECNOLOGIA DA INFORMAÇÃO • FIELD SERVICE • CABLING
+  <main id="conteudo">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/nexus-pro-hero.jpg" alt="" fetchpriority="high" />
       </div>
-
-      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
-        Sua operação de TI sem falhas com <span class="text-brand-400">Field Service de Alta Performance</span>
-      </h1>
-
-      <p class="text-gray-400 max-w-3xl mx-auto text-base sm:text-lg">
-        Atendimento presencial especializado, organização de racks, fusão óptica, cabeamento estruturado e infraestrutura de redes em Cuiabá e região.
-      </p>
-
-      <!-- METRICS GRID -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8">
-        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
-          <div class="text-xs text-gray-400 font-mono">ATENDIMENTO</div>
-          <div class="text-xl font-bold text-white mt-1">Presencial & Remoto</div>
-        </div>
-        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
-          <div class="text-xs text-gray-400 font-mono">REGULARIÇÃO</div>
-          <div class="text-xl font-bold text-brand-400 mt-1">Cuiabá - MT</div>
-        </div>
-        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
-          <div class="text-xs text-gray-400 font-mono">DOCUMENTAÇÃO</div>
-          <div class="text-xl font-bold text-white mt-1">Checklist & Relatórios</div>
-        </div>
-        <div class="bg-dark-800 border border-dark-700 p-4 rounded-xl text-left">
-          <div class="text-xs text-gray-400 font-mono">CONTRATAÇÃO</div>
-          <div class="text-xl font-bold text-brand-400 mt-1">Sob Demanda / Avulso</div>
+      <div class="container">
+        <div class="hero-content">
+          <h1 id="hero-title">Automatize seu atendimento e <span>conquiste mais clientes.</span></h1>
+          <p class="hero-copy">A NEXUS PRO conecta sua empresa a ferramentas de marketing, atendimento e tecnologia para você vender melhor e trabalhar com mais eficiência.</p>
+          <div class="hero-actions">
+            <a class="button" href="https://wa.me/5565992762871?text=Ol%C3%A1%2C%20gostaria%20de%20conhecer%20as%20solu%C3%A7%C3%B5es%20NEXUS%20PRO." target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11.6a8.1 8.1 0 0 1-12 7.1L4 20l1.3-3.8A8.1 8.1 0 1 1 20 11.6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4 0 .7.4.7 1.1 1.3 1.8 1.7.3.2.5.2.7-.1l.7-.8c.2-.2.4-.2.7-.1l1.6.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-1.9.6-1.1-.2-2.4-.8-3.7-2-1.5-1.3-2.3-2.8-2.5-3.9-.2-.9.1-1.5.4-1.8Z" fill="currentColor"/></svg>
+              Falar no WhatsApp
+              <span aria-hidden="true">→</span>
+            </a>
+            <a class="button button-outline" href="#solucoes">
+              Conhecer soluções
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <div class="trust-note">
+            <span class="trust-mark">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" fill="currentColor"/></svg>
+            </span>
+            Estratégia, tecnologia e atendimento em um só fluxo
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CATÁLOGO DE SERVIÇOS -->
-  <main class="max-w-7xl mx-auto px-4 py-16 flex-1 w-full">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-      <div>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">Catálogo de Serviços & Soluções</h2>
-        <p class="text-gray-400 text-sm mt-1">Selecione os serviços necessários para montar o escopo técnico do seu atendimento.</p>
+    <section class="benefit-band" id="beneficios" aria-label="Benefícios da NEXUS PRO">
+      <div class="container benefits">
+        <article class="benefit">
+          <svg class="benefit-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M18.5 2 7 17h8l-1.5 13L25 14h-8l1.5-12Z" fill="currentColor"/></svg>
+          <div><h2>Atendimento automatizado</h2><p>Respostas mais ágeis para manter cada conversa em movimento.</p></div>
+        </article>
+        <article class="benefit">
+          <svg class="benefit-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 26h24M7 22l6-7 5 3 8-11M20 7h6v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 22h4v4H6zm8-8h4v12h-4zm8-5h4v17h-4z" fill="currentColor"/></svg>
+          <div><h2>Mais oportunidades</h2><p>Organize contatos e transforme interesse em próximos passos.</p></div>
+        </article>
+        <article class="benefit">
+          <svg class="benefit-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="m16 3 11 4v8c0 7.1-4.6 11.4-11 14-6.4-2.6-11-6.9-11-14V7l11-4Z" fill="currentColor"/><path d="m11 16 3.3 3.3 6.8-7" stroke="#09090b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><h2>Operação integrada</h2><p>Marketing e atendimento trabalhando com mais continuidade.</p></div>
+        </article>
+        <article class="benefit">
+          <svg class="benefit-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M7 17v-2a9 9 0 0 1 18 0v2M7 17H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3V17H7Zm18 0h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3V17h1Zm-9 10h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><h2>Suporte próximo</h2><p>Conte com uma equipe preparada para acompanhar sua operação.</p></div>
+        </article>
       </div>
+    </section>
 
-      <!-- BOTÕES DE FILTRO -->
-      <div class="flex flex-wrap gap-2">
-        <button onclick="filterServices('all')" class="filter-btn active bg-brand-400 text-white font-semibold text-xs px-4 py-2 rounded-lg transition-all">Todos</button>
-        <button onclick="filterServices('field')" class="filter-btn bg-dark-800 hover:bg-dark-700 text-gray-300 font-semibold text-xs px-4 py-2 rounded-lg border border-dark-700 transition-all">Field Service</button>
-        <button onclick="filterServices('infra')" class="filter-btn bg-dark-800 hover:bg-dark-700 text-gray-300 font-semibold text-xs px-4 py-2 rounded-lg border border-dark-700 transition-all">Cabeamento & Racks</button>
-        <button onclick="filterServices('auto')" class="filter-btn bg-dark-800 hover:bg-dark-700 text-gray-300 font-semibold text-xs px-4 py-2 rounded-lg border border-dark-700 transition-all">MikroTik & Automação</button>
+    <section class="about" id="solucoes" aria-labelledby="about-title">
+      <div class="about-image">
+        <img src="assets/nexus-pro-about.jpg" alt="Notebook com gráfico de crescimento em vermelho sobre uma mesa de trabalho" loading="lazy" />
       </div>
-    </div>
+      <div class="about-content">
+        <div class="about-copy">
+          <p class="eyebrow">Sobre a NEXUS PRO</p>
+          <h2 id="about-title">Tecnologia que impulsiona seu negócio.</h2>
+          <p>Unimos soluções digitais, marketing estratégico e atendimento inteligente para ajudar sua empresa a criar conexões melhores com seus clientes.</p>
+          <a class="text-link" href="#contato">Saiba mais <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="about-stats" aria-label="O que você encontra na NEXUS PRO">
+          <div class="about-stat"><strong>Estratégia</strong><span>para atrair as pessoas certas</span></div>
+          <div class="about-stat"><strong>Integração</strong><span>para conectar cada etapa</span></div>
+          <div class="about-stat"><strong>Conversão</strong><span>para avançar oportunidades</span></div>
+        </div>
+      </div>
+    </section>
 
-    <!-- GRID DE SERVIÇOS -->
-    <div id="services-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Inserido dinamicamente via JS -->
-    </div>
+    <section class="process" id="processo" aria-labelledby="process-title">
+      <div class="container process-inner">
+        <div class="process-intro">
+          <p class="eyebrow">Como funciona</p>
+          <h2 id="process-title">Um processo simples e eficiente.</h2>
+          <p>Da primeira interação ao atendimento, cada etapa conectada para gerar oportunidades reais.</p>
+          <a class="button" href="#contato">Conhecer o processo <span aria-hidden="true">→</span></a>
+        </div>
+        <ol class="process-steps">
+          <li class="process-step">
+            <div class="step-top">
+              <span class="step-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10v4h4l5 4V6l-5 4H3Zm14-1 4 6m0-6-4 6M7 14l1.5 5H12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="step-count">01</span>
+            </div>
+            <h3>Captação</h3>
+            <p>Campanhas e conteúdos para alcançar novos públicos.</p>
+          </li>
+          <li class="process-step">
+            <div class="step-top">
+              <span class="step-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2h9A3.5 3.5 0 0 1 20 5.5v6a3.5 3.5 0 0 1-3.5 3.5H11l-5 4v-4.6A3.5 3.5 0 0 1 4 11.5v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8h6m-6 3h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+              <span class="step-count">02</span>
+            </div>
+            <h3>Triagem</h3>
+            <p>WhatsApp e atendimento inteligente para organizar conversas.</p>
+          </li>
+          <li class="process-step">
+            <div class="step-top">
+              <span class="step-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20V10h5v10H3Zm7 0V4h5v16h-5Zm7 0v-7h5v7h-5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>
+              <span class="step-count">03</span>
+            </div>
+            <h3>Conversão</h3>
+            <p>Oportunidades acompanhadas até o próximo passo.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="contact" id="contato" aria-labelledby="contact-title">
+      <div class="container contact-inner">
+        <div class="contact-copy">
+          <h2 id="contact-title">Vamos conversar?</h2>
+          <p>Conte um pouco sobre o que sua empresa precisa. Nossa equipe vai receber sua mensagem pelo WhatsApp.</p>
+          <ul class="contact-details">
+            <li>
+              <a href="mailto:contato@synchub.net.br">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v14H3V5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                contato@synchub.net.br
+              </a>
+            </li>
+            <li>
+              <span class="contact-location">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.8"/></svg>
+                Cuiabá · Mato Grosso
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="contact-form" id="contact-form">
+          <div class="field">
+            <label for="name">Seu nome <span aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="Como podemos chamar você?" required />
+          </div>
+          <div class="field">
+            <label for="email">Seu e-mail <span aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required />
+          </div>
+          <div class="field">
+            <label for="company">Sua empresa</label>
+            <input id="company" name="company" type="text" autocomplete="organization" placeholder="Nome da empresa" />
+          </div>
+          <div class="field">
+            <label for="message">Como podemos ajudar?</label>
+            <textarea id="message" name="message" placeholder="Conte brevemente o que você precisa"></textarea>
+          </div>
+          <button class="button form-submit" type="submit">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 3-7.2 18-3.8-7-7-3.8L21 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m10 14 4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Continuar pelo WhatsApp
+          </button>
+          <p class="form-note">Ao continuar, seus dados serão incluídos em uma mensagem do WhatsApp. Nada é enviado ou armazenado por este site.</p>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <!-- DRAWER DO ESCOPO -->
-  <div id="scope-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden justify-end">
-    <div class="bg-dark-800 w-full max-w-lg h-full border-l border-dark-700 p-6 flex flex-col justify-between overflow-y-auto">
-      <div>
-        <div class="flex items-center justify-between border-b border-dark-700 pb-4 mb-6">
-          <div>
-            <h3 class="text-xl font-bold text-white">Solicitação de Escopo</h3>
-            <p class="text-xs text-gray-400">Revise os serviços e informe a localização técnica</p>
-          </div>
-          <button id="close-scope" class="text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
-        </div>
-
-        <div id="selected-items" class="space-y-3 mb-6">
-          <!-- Itens do escopo -->
-        </div>
-      </div>
-
-      <div class="border-t border-dark-700 pt-6 space-y-4">
-        <div>
-          <label class="block text-xs font-mono text-gray-400 mb-1">EMPRESA / SOLICITANTE *</label>
-          <input type="text" id="input-company" placeholder="Ex: Tech Soluções / Carlos" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
-        </div>
-
-        <div class="grid grid-cols-3 gap-2">
-          <div class="col-span-1">
-            <label class="block text-xs font-mono text-gray-400 mb-1">CEP *</label>
-            <input type="text" id="input-cep" placeholder="78000-000" maxlength="9" onblur="fetchAddressByCEP()" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none font-mono" />
-          </div>
-          <div class="col-span-2">
-            <label class="block text-xs font-mono text-gray-400 mb-1">CIDADE / UF *</label>
-            <input type="text" id="input-location" placeholder="Autopreenchido via CEP" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-mono text-gray-400 mb-1">LOGRADOURO / BAIRRO (OPCIONAL)</label>
-          <input type="text" id="input-street" placeholder="Rua, Número e Bairro do site" class="w-full bg-dark-900 border border-dark-700 rounded-lg p-3 text-sm text-white focus:border-brand-400 outline-none" />
-          <p id="cep-loading" class="text-[10px] text-brand-400 font-mono mt-1 hidden">Consultando base do ViaCEP API...</p>
-        </div>
-
-        <button onclick="sendToWhatsApp()" class="w-full bg-brand-400 hover:bg-brand-500 text-white font-bold text-sm py-4 rounded-lg uppercase tracking-wider transition-all glow-brand flex items-center justify-center gap-2">
-          ENVIAR ESCOPO VIA WHATSAPP
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="bg-dark-800 border-t border-dark-700 py-10 px-4 text-sm text-gray-400">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <div>
-        <div class="text-xl font-bold text-white mb-1">SYNC <span class="text-brand-400">HUB</span></div>
-        <p class="text-xs text-gray-500">Tecnologia da Informação • Field Service • Cabling</p>
-        <p class="text-xs text-gray-400 mt-1">Cuiabá - Mato Grosso</p>
-      </div>
-      <div class="text-xs text-center md:text-right">
-        <div>WhatsApp: <a href="https://wa.me/5565992762871" target="_blank" class="text-brand-400 font-bold hover:underline">(65) 99276-2871</a></div>
-        <div>Contato: <a href="mailto:contato@synchub.net.br" class="text-brand-400 hover:underline">contato@synchub.net.br</a></div>
-        <div class="mt-2 text-gray-600">© 2026 Sync Hub. Todos os direitos reservados.</div>
-      </div>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="#inicio" aria-label="NEXUS PRO — voltar ao início">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <path d="M5 38V10.5L12 6l12 7.5 12-7.5 7 4.5v27l-7 4.5L24 34 12 41.5 5 38Z" fill="currentColor" />
+          <path d="M12 15v20l12-7.5L36 35V15L24 22.5 12 15Z" fill="#09090b" />
+          <path d="M12 14.8 24 22l12-7.2" stroke="#09090b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="brand-copy">
+          <span class="brand-name">NEXUS <span>PRO</span></span>
+          <span class="brand-caption">Soluções em tecnologia</span>
+        </span>
+      </a>
+      <nav class="footer-nav" aria-label="Navegação do rodapé">
+        <a href="#inicio">Início</a>
+        <a href="#solucoes">Soluções</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#processo">Como funciona</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="copyright">Soluções em tecnologia e crescimento</div>
     </div>
   </footer>
 
+  <a class="whatsapp-float" href="https://wa.me/5565992762871?text=Ol%C3%A1%2C%20gostaria%20de%20conhecer%20as%20solu%C3%A7%C3%B5es%20NEXUS%20PRO." target="_blank" rel="noopener noreferrer" aria-label="Fale com a NEXUS PRO pelo WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11.6a8.1 8.1 0 0 1-12 7.1L4 20l1.3-3.8A8.1 8.1 0 1 1 20 11.6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4 0 .7.4.7 1.1 1.3 1.8 1.7.3.2.5.2.7-.1l.7-.8c.2-.2.4-.2.7-.1l1.6.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-1.9.6-1.1-.2-2.4-.8-3.7-2-1.5-1.3-2.3-2.8-2.5-3.9-.2-.9.1-1.5.4-1.8Z" fill="currentColor"/></svg>
+  </a>
+
   <script>
-    // CONFIGURAÇÃO DO SUPABASE
-    const SUPABASE_URL = "https://auqpecchunnjfnswhpde.supabase.co";
-    const SUPABASE_ANON_KEY = "auqpecchunnjfnswhpde"; 
-    
-    const supabase = (SUPABASE_ANON_KEY !== "SUA_CHAVE_ANON_PUBLIC_AQUI") 
-      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
-      : null;
+    const menuToggle = document.querySelector(".menu-toggle");
+    const siteNav = document.querySelector("#site-nav");
+    const contactForm = document.querySelector("#contact-form");
+    const formStatus = document.querySelector("#form-status");
+    const whatsappNumber = "5565992762871";
 
-    const WHATSAPP_NUMBER = "5565992762871";
-
-    // CATÁLOGO DE PRODUTOS/SERVIÇOS RESTAURADO
-    const servicesList = [
-      {
-        id: "field-01",
-        cat: "field",
-        title: "Atendimento de Campo (Field Service)",
-        desc: "Suporte presencial para chamados corretivos, preventivos ou troca de ativos de TI com técnicos qualificados.",
-        tag: "Presencial"
-      },
-      {
-        id: "field-02",
-        cat: "field",
-        title: "Homologação & Survey de Site",
-        desc: "Vistoria técnica detalhada em instalações físicas, verificação de infraestrutura e relatórios técnicos.",
-        tag: "Relatório B2B"
-      },
-      {
-        id: "infra-01",
-        cat: "infra",
-        title: "Organização & Cabeamento de Racks",
-        desc: "Organização de patch panels, cabeamento padronizado, identificação de cabos e limpeza estrutural de racks.",
-        tag: "Infraestrutura"
-      },
-      {
-        id: "infra-02",
-        cat: "infra",
-        title: "Lançamento & Fusão de Fibra Óptica",
-        desc: "Lançamento de cabos ópticos, fusões de precisão, conectorização e testes de conectividade em campo.",
-        tag: "Redes Ópticas"
-      },
-      {
-        id: "auto-01",
-        cat: "auto",
-        title: "Configuração & Automação MikroTik",
-        desc: "Criação de scripts RouterOS, balanceamento de carga (Failover/PBR), VPNs corporativas e segurança de borda.",
-        tag: "RouterOS"
-      },
-      {
-        id: "auto-02",
-        cat: "auto",
-        title: "Deploy de Servidores & GLPI em Docker",
-        desc: "Instalação de sistemas de chamados, monitoramento (Zabbix/Grafana) e servidores Ubuntu totalmente configurados.",
-        tag: "DevOps & Cloud"
-      }
-    ];
-
-    let scopeCart = [];
-
-    // CONSULTA API VIACEP
-    async function fetchAddressByCEP() {
-      const rawCep = document.getElementById('input-cep').value.replace(/\D/g, '');
-      const loadingEl = document.getElementById('cep-loading');
-      
-      if (rawCep.length === 8) {
-        loadingEl.classList.remove('hidden');
-        try {
-          const res = await fetch(`https://viacep.com.br/ws/${rawCep}/json/`);
-          const data = await res.json();
-          
-          if (!data.erro) {
-            document.getElementById('input-location').value = `${data.localidade} - ${data.uf}`;
-            document.getElementById('input-street').value = `${data.logradouro}${data.bairro ? ' - ' + data.bairro : ''}`;
-          } else {
-            alert("CEP não localizado na base de dados.");
-          }
-        } catch (err) {
-          console.error("Falha ao consultar API de CEP:", err);
-        } finally {
-          loadingEl.classList.add('hidden');
-        }
-      }
+    function closeMenu() {
+      siteNav.classList.remove("is-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Abrir menu");
     }
 
-    function renderServices(items) {
-      const container = document.getElementById('services-container');
-      container.innerHTML = items.map(service => `
-        <div class="bg-dark-800 border border-dark-700 hover:border-brand-400/50 rounded-xl p-6 flex flex-col justify-between transition-all group">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-[10px] font-mono font-bold text-brand-400 bg-brand-400/10 border border-brand-400/30 px-2.5 py-1 rounded-full uppercase">${service.tag}</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">${service.title}</h3>
-            <p class="text-xs text-gray-400 leading-relaxed mb-6">${service.desc}</p>
-          </div>
-          <button onclick="addToScope('${service.id}')" class="w-full bg-dark-700 hover:bg-brand-400 hover:text-white text-white font-semibold text-xs py-3 rounded-lg transition-all flex items-center justify-center gap-2">
-            + Adicionar ao Escopo
-          </button>
-        </div>
-      `).join('');
-    }
+    menuToggle.addEventListener("click", () => {
+      const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+      menuToggle.setAttribute("aria-label", isExpanded ? "Abrir menu" : "Fechar menu");
+      siteNav.classList.toggle("is-open", !isExpanded);
+    });
 
-    function filterServices(category) {
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('bg-brand-400', 'text-white');
-        btn.classList.add('bg-dark-800', 'text-gray-300');
-      });
-      event.target.classList.remove('bg-dark-800', 'text-gray-300');
-      event.target.classList.add('bg-brand-400', 'text-white');
+    siteNav.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) closeMenu();
+    });
 
-      if(category === 'all') renderServices(servicesList);
-      else renderServices(servicesList.filter(s => s.cat === category));
-    }
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
 
-    function addToScope(id) {
-      const item = servicesList.find(s => s.id === id);
-      if(!scopeCart.find(s => s.id === id)) {
-        scopeCart.push(item);
-        updateScopeUI();
-      }
-    }
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!contactForm.reportValidity()) return;
 
-    function removeFromScope(id) {
-      scopeCart = scopeCart.filter(s => s.id !== id);
-      updateScopeUI();
-    }
+      const fields = new FormData(contactForm);
+      const message = [
+        "Olá, gostaria de conversar com a NEXUS PRO.",
+        "",
+        `Nome: ${fields.get("name")}`,
+        `E-mail: ${fields.get("email")}`,
+        fields.get("company") ? `Empresa: ${fields.get("company")}` : "",
+        fields.get("message") ? `Mensagem: ${fields.get("message")}` : ""
+      ].filter(Boolean).join("\n");
 
-    function updateScopeUI() {
-      document.getElementById('scope-count').innerText = scopeCart.length;
-      const container = document.getElementById('selected-items');
+      formStatus.textContent = "Abrindo uma conversa no WhatsApp para você concluir o envio.";
+      window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    });
 
-      if(scopeCart.length === 0) {
-        container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">Nenhum serviço selecionado ainda.</p>`;
-        return;
-      }
-
-      container.innerHTML = scopeCart.map(item => `
-        <div class="bg-dark-900 border border-dark-700 p-3 rounded-lg flex justify-between items-center">
-          <div>
-            <div class="text-xs font-bold text-white">${item.title}</div>
-            <div class="text-[10px] text-brand-400 font-mono">${item.tag}</div>
-          </div>
-          <button onclick="removeFromScope('${item.id}')" class="text-red-400 hover:text-red-300 text-xs font-bold px-2">Remover</button>
-        </div>
-      `).join('');
-    }
-
-    // GRAVAR NO SUPABASE E DISPARAR WHATSAPP
-    async function sendToWhatsApp() {
-      if(scopeCart.length === 0) {
-        alert("Por favor, adicione pelo menos um serviço ao seu escopo.");
-        return;
-      }
-
-      const company = document.getElementById('input-company').value.trim();
-      const location = document.getElementById('input-location').value.trim();
-      const street = document.getElementById('input-street').value.trim();
-      const cep = document.getElementById('input-cep').value.trim();
-
-      if(!company || !location) {
-        alert("Preencha o Nome da Empresa e a Localidade/CEP para solicitar o atendimento.");
-        return;
-      }
-
-      if (supabase) {
-        try {
-          await supabase.from('solicitacoes_escopo').insert([
-            {
-              empresa: company,
-              localizacao: location,
-              cep: cep,
-              endereco: street,
-              servicos: scopeCart.map(s => s.title),
-              criado_em: new Date().toISOString()
-            }
-          ]);
-        } catch (err) {
-          console.error("Erro ao salvar no Supabase:", err);
-        }
-      }
-
-      let msg = `*SOLICITAÇÃO DE FIELD SERVICE / ATENDIMENTO - SYNC HUB*\n\n`;
-      msg += `*Empresa/Solicitante:* ${company}\n`;
-      msg += `*Localidade:* ${location} ${cep ? '(CEP: ' + cep + ')' : ''}\n`;
-      if (street) msg += `*Endereço do Site:* ${street}\n`;
-      msg += `\n*SERVIÇOS SELECIONADOS:*\n`;
-
-      scopeCart.forEach((item, idx) => {
-        msg += `${idx + 1}. ${item.title} (${item.tag})\n`;
-      });
-
-      msg += `\n_Aguardando contato para agendamento e orçamento._`;
-
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    document.getElementById('open-scope').onclick = () => {
-      document.getElementById('scope-drawer').classList.remove('hidden');
-      document.getElementById('scope-drawer').classList.add('flex');
-    };
-
-    document.getElementById('close-scope').onclick = () => {
-      document.getElementById('scope-drawer').classList.add('hidden');
-      document.getElementById('scope-drawer').classList.remove('flex');
-    };
-
-    // INICIALIZAÇÃO CORRETA DOS PRODUTOS NA TELA
-    renderServices(servicesList);
-    updateScopeUI();
   </script>
 </body>
 </html>
