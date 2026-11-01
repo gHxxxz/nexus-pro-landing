@@ -71,11 +71,12 @@ function handleFormSubmit(form, request, onSuccess) {
     event.preventDefault();
     if (!form.reportValidity()) return;
 
+    const formData = new FormData(form);
     setFormBusy(form, true);
     showStatus("");
 
     try {
-      const { data, error } = await request(new FormData(form));
+      const { data, error } = await request(formData);
       if (error) {
         displayAuthError(error);
         return;

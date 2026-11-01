@@ -4,7 +4,9 @@ Static, responsive marketing page built in `index.html` and served directly by V
 
 The contact form validates in the browser and opens a WhatsApp message using the number already configured in the project; it does not submit or store form data. Email/password sign-in, account creation, and password recovery use Supabase Auth via `auth.js`; the project URL and public publishable key are configured in `supabase-config.js`.
 
-Supabase Auth is configured with `https://nexus.pro.synchub.net.br` as the Site URL and allowed redirect URL. Email signup and email confirmation are enabled in the Supabase project.
+Supabase Auth is configured with `https://nexus.pro.synchub.net.br` as the Site URL and allowed redirect URL. Email signup and email confirmation are enabled in the Supabase project. Auth email delivery uses the project's custom SMTP settings; keep the Resend SMTP password only in the Supabase dashboard, never in this repository or browser code.
+
+The Resend SMTP host is `smtp.resend.com`, port `465`, username `resend`. The sender address must belong to a domain verified in Resend. See the [Supabase SMTP guide](https://supabase.com/docs/guides/auth/auth-smtp).
 
 Before deploying authentication:
 
