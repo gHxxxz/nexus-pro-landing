@@ -20,7 +20,7 @@ The reference positions NEXUS PRO around an integrated flow from lead acquisitio
 
 ## Capabilities and Constraints
 
-The requested page is a static marketing landing page. There is no configured form backend. The existing workspace has a WhatsApp contact number and email address; the form should use a client-side WhatsApp message link rather than claim to submit or store data.
+The page is a static marketing landing page. Its contact form uses a client-side WhatsApp message link and does not submit or store lead data. Supabase Auth handles email/password account creation, sign-in, and password recovery; authentication does not imply access to any protected application data.
 
 ## Brand Commitments
 
@@ -38,6 +38,7 @@ The local hero and about photographs are crops from the supplied reference image
 - Describe the acquisition-to-conversion journey as one connected process.
 - Use only configured contact routes for lead capture.
 - Do not imply that the static form stores or transmits data to a backend.
+- Keep Supabase secret/service-role keys out of browser code.
 
 ## Accessibility & Inclusion
 
